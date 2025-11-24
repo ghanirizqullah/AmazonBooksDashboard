@@ -68,12 +68,13 @@ top_books_data = query("""
         year(m.published_date) as year,
         m.title,
         m.author_name,
+        m.category_level_3_detail as genre,
         count(r.asin) as total_reviews,
         sum(r.rating * m.price) as total_sales
     from processed_metadata m
     left join books_reviews r using(parent_asin)
     where m.published_date is not null
-    group by year(m.published_date), m.title, m.author_name
+    group by year(m.published_date), m.title, m.author_name, m.category_level_3_detail
     order by year, total_sales desc
 """)
 
